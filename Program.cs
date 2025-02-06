@@ -1,4 +1,10 @@
 using Microsoft.OpenApi.Models;
+using TodoApi.Data;
+using TodoApi.Repositories;
+using Microsoft.EntityFrameworkCore;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +20,17 @@ builder.Services.AddSwaggerGen(options =>
         Description = "A simple ASP.NET Core Todo API"
     });
 });
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Register DbContext
+builder.Services.AddDbContext<TodoDbContext>(options =>
+    options.UseSqlServer(connectionString)
+);
+
+// Register Repository
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 var app = builder.Build();
 

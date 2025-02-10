@@ -14,9 +14,14 @@ namespace TodoApi.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Todo>> GetAllTodosAsync()
+        public async Task<IEnumerable<Todo>> GetAllTodosAsync(Filter<Todo>? filter)
         {
-            return await _context.Todos.ToListAsync();
+            IQueryable<Todo> query = _context.Todos.AsQueryable();
+            if (filter != null)
+            {
+                query = query.ApplyFilter(filter);
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<Todo?> GetTodoByIdAsync(int id)

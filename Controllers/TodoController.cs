@@ -25,7 +25,18 @@ namespace TodoApi.Controllers
         [SwaggerOperation(Summary = "Get all todos")]
         public async Task<IActionResult> GetTodos()
         {
-            var todos = await _todoRepository.GetAllTodosAsync();
+            var todos = await _todoRepository.GetAllTodosAsync(null);
+            return Ok(todos);
+        }
+
+        /// <summary>
+        /// Query all todos
+        /// </summary>
+        [HttpPost("query")]
+        [SwaggerOperation(Summary = "Query all todos")]
+        public async Task<IActionResult> QueryTodos([FromBody] Filter<Todo> filter)
+        {
+            var todos = await _todoRepository.GetAllTodosAsync(filter);
             return Ok(todos);
         }
 

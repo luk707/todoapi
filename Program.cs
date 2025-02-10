@@ -1,8 +1,10 @@
+using DotNetEnv;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+
 using TodoApi.Data;
 using TodoApi.Repositories;
-using Microsoft.EntityFrameworkCore;
-using DotNetEnv;
 
 Env.Load();
 

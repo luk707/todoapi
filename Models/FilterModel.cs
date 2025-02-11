@@ -1,7 +1,6 @@
-namespace TodoApi.Models
+namespace TodoApi.Models;
+
+public class Filter<T>
 {
-    public class Filter<T>
-    {
-        public Dictionary<string, Dictionary<string, object>> Conditions { get; set; } = new();
-    }
+    public Dictionary<string, Dictionary<string, object>> Conditions { get; set; } = new();
 }
